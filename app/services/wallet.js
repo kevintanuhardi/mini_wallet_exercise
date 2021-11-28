@@ -18,7 +18,7 @@ module.exports = {
 
       const [createdUser] = await Promise.all([
         userCommonAction.create({ id: customerXid }, transaction),
-        walletCommonAction.create({ owner_id: customerXid }, transaction),
+        walletCommonAction.create({ ownerId: customerXid }, transaction),
       ]);
 
       await transaction.commit();
@@ -48,7 +48,7 @@ module.exports = {
     const [existingUser] = await walletCommonAction.update(
       { ownerId: userId, status: walletStatusEnum.ENABLED },
       {
-        status: walletStatusEnum.ENABLED,
+        status: walletStatusEnum.DISABLED,
         enabledAt: new Date(),
       },
     );
@@ -70,7 +70,7 @@ module.exports = {
 
     return wallet;
   },
-  depositMoney: async (userId, referenceId, amount) => {
+  deposit: async (userId, referenceId, amount) => {
     const transaction = await sequelize.transaction();
     try {
       const [wallet, duplicateMutation] = await Promise.all([
@@ -90,7 +90,7 @@ module.exports = {
       await Promise.all([
         walletCommonAction.update(
           { id: wallet.id },
-          { balance: wallet.balance += amount },
+          { balance: Number(wallet.balance) + Number(amount) },
           transaction,
         ),
         // type defined from bank or wallet company perspective
@@ -111,7 +111,7 @@ module.exports = {
       throw (error);
     }
   },
-  expendMoney: async (userId, referenceId, amount) => {
+  expend: async (userId, referenceId, amount) => {
     const transaction = await sequelize.transaction();
     try {
       const [wallet, duplicateMutation] = await Promise.all([
@@ -124,7 +124,7 @@ module.exports = {
         throw new ErrorWithStatusCode(errorMessage.WALLET_DISABLED, 401);
       }
 
-      if (wallet.balance < amount) {
+      if (Number(wallet.balance) < amount) {
         throw new ErrorWithStatusCode(errorMessage.INSUFFICIENT_BALANCE, 422);
       }
 
@@ -135,7 +135,7 @@ module.exports = {
       await Promise.all([
         walletCommonAction.update(
           { id: wallet.id },
-          { balance: wallet.balance -= amount },
+          { balance: Number(wallet.balance) - Number(amount) },
           transaction,
         ),
         // type defined from bank or wallet company perspective

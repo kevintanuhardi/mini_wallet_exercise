@@ -41,13 +41,74 @@ module.exports = {
       return Helpers.errorResponse(res, null, err);
     }
   },
+  disableWallet: async (req, res) => {
+    try {
+      const {
+        userId,
+      } = req;
+
+      const wallet = await walletSrv.disableWallet(userId);
+
+      return Helpers.successResponse(
+        res,
+        200,
+        { data: { wallet: walletDTO(wallet) }, status: 'success' },
+      );
+    } catch (err) {
+      return Helpers.errorResponse(res, null, err);
+    }
+  },
   viewBalance: async (req, res) => {
     try {
       const {
         userId,
       } = req;
 
-      const wallet = await walletSrv.viewBalance(userId);
+      const result = await walletSrv.viewBalance(userId);
+
+      return Helpers.successResponse(
+        res,
+        200,
+        { data: { deposit: depositDTO(result) }, status: 'success' },
+      );
+    } catch (err) {
+      return Helpers.errorResponse(res, null, err);
+    }
+  },
+  depositFund: async (req, res) => {
+    try {
+      const {
+        userId,
+      } = req;
+
+      const {
+        reference_id: referenceId,
+        amount,
+      } = req.body;
+
+      const result = await walletSrv.deposit(userId, referenceId, amount);
+
+      return Helpers.successResponse(
+        res,
+        200,
+        { data: { withdrawal: withdrawnDTO(result) }, status: 'success' },
+      );
+    } catch (err) {
+      return Helpers.errorResponse(res, null, err);
+    }
+  },
+  expendFund: async (req, res) => {
+    try {
+      const {
+        userId,
+      } = req;
+
+      const {
+        reference_id: referenceId,
+        amount,
+      } = req.body;
+
+      const wallet = await walletSrv.expend(userId, referenceId, amount);
 
       return Helpers.successResponse(
         res,

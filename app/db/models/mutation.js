@@ -6,6 +6,12 @@ const {
 
 module.exports = (sequelize, DataTypes) => {
   const Mutation = sequelize.define('Mutation', {
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
     walletId: {
       field: 'wallet_id',
       allowNull: false,

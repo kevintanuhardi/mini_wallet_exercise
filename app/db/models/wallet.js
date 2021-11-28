@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
       field: 'owner_id',
       allowNull: false,
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
     },
     status: {
       allowNull: false,
