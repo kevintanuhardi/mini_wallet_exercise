@@ -87,7 +87,7 @@ module.exports = {
         throw new ErrorWithStatusCode(errorMessage.DUPLICATE_REFERENCE_ID, 422);
       }
 
-      await Promise.all([
+      const [, mutation] = await Promise.all([
         walletCommonAction.update(
           { id: wallet.id },
           { balance: Number(wallet.balance) + Number(amount) },
@@ -103,9 +103,7 @@ module.exports = {
       ]);
 
       await transaction.commit();
-      const updatedWallet = await walletCommonAction
-        .findOne({ ownerId: userId });
-      return updatedWallet;
+      return mutation;
     } catch (error) {
       transaction.rollback();
       throw (error);
@@ -132,7 +130,7 @@ module.exports = {
         throw new ErrorWithStatusCode(errorMessage.DUPLICATE_REFERENCE_ID, 422);
       }
 
-      await Promise.all([
+      const [, mutation] = await Promise.all([
         walletCommonAction.update(
           { id: wallet.id },
           { balance: Number(wallet.balance) - Number(amount) },
@@ -148,9 +146,7 @@ module.exports = {
       ]);
 
       await transaction.commit();
-      const updatedWallet = await walletCommonAction
-        .findOne({ ownerId: userId });
-      return updatedWallet;
+      return mutation;
     } catch (error) {
       transaction.rollback();
       throw (error);
