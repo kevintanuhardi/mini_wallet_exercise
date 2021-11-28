@@ -1,21 +1,26 @@
 /* global Helpers */
 const Joi = require('joi');
 
-// listLoanLeverage: (req) => {
-//   const { query } = req;
+const initWallet = (req, _res, next) => {
+  const { body } = req;
 
-//   const validateRes = Joi.object({
-//     resortId: Joi.number(),
-//   }).validate(query);
+  console.log('body:', body);
 
-//   if (validateRes.error) {
-//     throw ({
-//       status: Helpers.constant.httpStatus.badRequest,
-//       message: Helpers.constant.messages.badRequest,
-//       error: validateRes.error.details,
-//     });
-//   }
-// },
+  const validateRes = Joi.object({
+    customer_xid: Joi.string().guid().required(),
+  }).validate(body);
+
+  if (validateRes.error) {
+    throw ({
+      status: Helpers.constant.httpStatus.badRequest,
+      message: Helpers.constant.messages.badRequest,
+      error: validateRes.error.details,
+    });
+  }
+
+  return next();
+};
 
 module.exports = {
+  initWallet,
 };

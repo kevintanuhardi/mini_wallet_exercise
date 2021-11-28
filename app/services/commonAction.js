@@ -2,7 +2,7 @@
 const models = require('../db/models');
 
 module.exports = (modelName) => ({
-  create: async (newData) => models[modelName].create(newData),
+  create: async (newData, transaction) => models[modelName].create(newData, { transaction }),
   findOrCreate: async (newData, searchFields) => {
     const search = {};
 
@@ -44,9 +44,9 @@ module.exports = (modelName) => ({
     where,
     include,
   }),
-  update: async (where, field) => {
+  update: async (where, field, transaction) => {
     Helpers.clearObjectEmptyField(field);
-    return models[modelName].update(field, { where });
+    return models[modelName].update(field, { where, transaction });
   },
   upsert: async (newData, uniqueFields) => {
     const instance = await models[modelName].findOne({ where: uniqueFields });

@@ -4,8 +4,7 @@ const config = require('../../config');
 
 const oauthClient = config.get('OAUTH');
 
-const generateAccessToken = async ({ phoneNumber, userId }) => jwt.sign({
-  phoneNumber,
+const generateAccessToken = ({ userId }) => jwt.sign({
   userId,
 },
 oauthClient.clientSecret,
@@ -19,7 +18,6 @@ const getDataFromToken = async (bearerToken) => jwt.verify(
     if (decoded && decoded.exp >= new Date().valueOf() / 1000) {
       return {
         active: true,
-        phoneNumber: decoded.phoneNumber,
         userId: decoded.userId,
       };
     }

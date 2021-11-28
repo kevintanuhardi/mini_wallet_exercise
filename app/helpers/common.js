@@ -34,9 +34,8 @@ exports.errorResponse = (res, httpCodeStatus, err) => {
   return res.status(resultPrint.status).json(resultPrint);
 };
 
-exports.successResponse = (res, status, obj, extra) => {
+exports.successResponse = (res, statusCode, obj, extra) => {
   let resultPrint = {};
-  resultPrint.status = status || 200;
 
   if (isObject(obj)) {
     resultPrint = {
@@ -50,7 +49,7 @@ exports.successResponse = (res, status, obj, extra) => {
     Object.assign(resultPrint, extra);
   }
   if (res === undefined) return resultPrint;
-  return res.status(resultPrint.status).json(resultPrint);
+  return res.status(statusCode).json(resultPrint);
 };
 
 exports.loadFile = (dirname, basename) => {

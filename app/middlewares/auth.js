@@ -7,6 +7,7 @@ module.exports = {
     const {
       headers,
     } = req;
+
     try {
       const header = headers.Authorization || headers.authorization;
       if (!header) throw ({ status: 401, message: 'authorization is not exist' });

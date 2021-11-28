@@ -1,5 +1,10 @@
 /* global Helpers */
 
+const walletCtr = require('../../controllers/wallet');
+const validator = require('../../middlewares/schemaValidations');
+const auth = require('../../middlewares/auth');
+
 module.exports = (router) => {
-  router.get('/', (req, res) => Helpers.successResponse(res, 200, 'pong'));
+  router.post('/init', validator.initWallet, walletCtr.initWallet);
+  router.post('/', auth.validateToken, walletCtr.enableWallet);
 };

@@ -28,9 +28,6 @@ app.use(fileUpload());
 // Logger
 app.set('etag', false);
 
-// Authentication Middleware
-app.use('/', middleware.auth.validateToken);
-
 // Routing
 app.get('/', (_req, res) => Helpers.successResponse(res, 200, 'pong'));
 app.use('/api', enrouten({ directory: 'routes' }));
