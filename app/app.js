@@ -11,12 +11,11 @@ global.Helpers = require('./helpers/common');
 
 const app = express();
 app.use(cors());
-// global.CustomStatusCode = require('./helpers/enum').customStatusCode;
 
 // app.use(expressValidator());
 
 // Embedd RequestId
-app.use((req, res, next) => {
+app.use((req, _res, next) => {
   req.requestId = cuid();
   next();
 });
@@ -33,17 +32,18 @@ app.set('etag', false);
 app.use('/', middleware.auth.validateToken);
 
 // Routing
-app.use('/', enrouten({ directory: 'routes' }));
+app.get('/', (_req, res) => Helpers.successResponse(res, 200, 'pong'));
+app.use('/api', enrouten({ directory: 'routes' }));
 
 // Not Found handler
 /* eslint-disable no-unused-vars */
-app.use('*', (req, res) => {
+app.use('*', (_req, res) => {
   res.status(404).json({
     message: 'Resource not found.',
   });
 });
 
 // Error handler
-app.use((err, req, res, next) => Helpers.errorResponse(res, null, err));
+app.use((err, _req, res, _next) => Helpers.errorResponse(res, null, err));
 
 module.exports = app;

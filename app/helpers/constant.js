@@ -9,7 +9,7 @@ module.exports = {
   },
   messages: {
   },
-  privateRoute: {
+  publicRoute: {
     GET: [
       '/example',
     ],
