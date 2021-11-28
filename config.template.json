@@ -1,0 +1,16 @@
+{
+  "db_dev": {
+    "username": "db_dev_username",
+    "password": "db_dev_password",
+    "database": "db_dev_database",
+    "host": "db_dev_host",
+    "port": "db_dev_port",
+    "dialect": "db_dev_dialect"
+  },
+  "OAUTH" : {
+    "clientSecret": "dev-secret",
+    "scope": "",
+    "clientId": "",
+    "name": ""
+  }
+}
