@@ -1,5 +1,5 @@
 {
-  "name": "Serabutan-api",
+  "name": "mini_wallet_api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -22,15 +22,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kevintanuhardi/Serabutan-api.git"
+    "url": "git+https://github.com/kevintanuhardi/mini_wallet_exercise.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kevintanuhardi/Serabutan-api/issues"
+    "url": "https://github.com/kevintanuhardi/mini_wallet_exercise/issues"
   },
-  "homepage": "https://github.com/kevintanuhardi/Serabutan-api#readme",
+  "homepage": "https://github.com/kevintanuhardi/mini_wallet_exercise#readme",
   "dependencies": {
     "aws-sdk": "^2.948.0",
     "axios": "^0.19.2",
